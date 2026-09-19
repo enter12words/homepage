@@ -17,10 +17,10 @@
   <meta name="twitter:title" content="UvCat — Personal Portfolio">
   <meta name="twitter:description" content="UvCat 的个人主页与作品集。">
 
-  <!-- 萌系小猫 Favicon -->
+  <!-- 猫咪 Emoji Favicon -->
   <link
     rel="icon"
-    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23111827'/%3E%3Cpath d='M7 14 L5 6 C7 6 10 8 13 9 C15 8.3 17 8.3 19 9 C22 8 25 6 27 6 L25 14 C28 18 26.5 24 22 26 C18.5 27.5 13.5 27.5 10 26 C5.5 24 4 18 7 14 Z' fill='%23ffffff' fill-opacity='0.15' stroke='white' stroke-width='1.8' stroke-linejoin='round'/%3E%3Ccircle cx='11.5' cy='16' r='1.8' fill='white'/%3E%3Ccircle cx='20.5' cy='16' r='1.8' fill='white'/%3E%3Cpath d='M14 19.5 Q16 21 16 19.5 Q16 21 18 19.5' stroke='white' stroke-width='1.2' stroke-linecap='round' fill='none'/%3E%3C/svg%3E"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>"
   >
 
   <style>
@@ -39,7 +39,7 @@
       --focus: #2563eb;
       --nav-bg: rgba(255, 255, 255, 0.88);
 
-      /* 首屏遮罩透明度 0.21 */
+      /* 遮罩透明度 0.21 */
       --hero-overlay: rgba(255, 255, 255, 0.21);
 
       --max-width: 1080px;
@@ -74,7 +74,7 @@
 
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: calc(var(--header-height) + 20px);
+      scroll-padding-top: calc(var(--header-height) + 16px);
     }
 
     body {
@@ -145,10 +145,10 @@
       transform: translateY(0);
     }
 
-    /* Header */
+    /* Header：改用 sticky 实体占位，从结构上彻底杜绝遮挡 hero 图片顶部 */
     .site-header {
-      position: fixed;
-      inset: 0 0 auto 0;
+      position: sticky;
+      top: 0;
       z-index: 100;
       height: var(--header-height);
       border-bottom: 1px solid var(--border);
@@ -178,13 +178,15 @@
       display: grid;
       place-items: center;
       border-radius: 10px;
-      background: var(--accent);
-      color: var(--accent-contrast);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      font-size: 20px;
+      line-height: 1;
       transition: transform var(--transition);
     }
 
     .brand:hover .brand-mark {
-      transform: rotate(-6deg) scale(1.05);
+      transform: rotate(-8deg) scale(1.1);
     }
 
     .desktop-nav {
@@ -242,69 +244,65 @@
       font-weight: 600;
     }
 
-    /* Hero：图片置于顶栏之下，完全不被遮挡；背景右对齐保留人物 */
+    /* Hero：从顶栏底部立即开始铺展，right top 确保顶部边缘完整露出 */
     .hero {
       position: relative;
-      margin-top: var(--header-height);
       min-height: calc(100vh - var(--header-height));
       min-height: calc(100svh - var(--header-height));
       display: flex;
       align-items: center;
-      padding: 48px 0 64px;
+      padding: 36px 0 52px;
       background-image: 
         linear-gradient(to right, var(--hero-overlay), var(--hero-overlay)),
         url('bg.jpg');
       background-size: cover;
-      background-position: right center;
+      background-position: right top;
       background-repeat: no-repeat;
     }
 
-    /* 内容栏靠左布局，避免挡住右侧动漫人物 */
+    /* 靠左紧凑布局，完全让出右侧人物 */
     .hero-content {
       position: relative;
       z-index: 1;
-      max-width: 480px;
+      max-width: 450px;
       margin-left: 0;
       margin-right: auto;
-      padding: 30px 32px;
+      padding: 28px 30px;
       border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.75);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     }
 
     @media (prefers-color-scheme: dark) {
       .hero-content {
-        background: rgba(11, 15, 20, 0.76);
+        background: rgba(11, 15, 20, 0.78);
         border: 1px solid rgba(255, 255, 255, 0.12);
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
       }
     }
 
+    /* 猫咪 Emoji 大头像 */
     .avatar {
-      width: 86px;
-      height: 86px;
-      margin-bottom: 20px;
+      width: 82px;
+      height: 82px;
+      margin-bottom: 18px;
       display: grid;
       place-items: center;
       border: 2px solid var(--border);
       border-radius: 50%;
       background: var(--surface);
-      color: var(--text);
-      overflow: hidden;
+      font-size: 44px;
+      line-height: 1;
+      user-select: none;
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
       transition: transform var(--transition);
     }
 
     .avatar:hover {
-      transform: scale(1.05) rotate(4deg);
-    }
-
-    .avatar svg {
-      width: 72px;
-      height: 72px;
+      transform: scale(1.08) rotate(6deg);
     }
 
     .eyebrow {
@@ -316,11 +314,10 @@
       text-transform: uppercase;
     }
 
-    /* 调小主标题字号，更加秀气精致 */
     .hero h1 {
       margin: 0;
-      max-width: 460px;
-      font-size: clamp(28px, 4.2vw, 44px);
+      max-width: 440px;
+      font-size: clamp(28px, 4.2vw, 42px);
       line-height: 1.16;
       letter-spacing: -0.035em;
       font-weight: 800;
@@ -331,7 +328,7 @@
     }
 
     .hero-description {
-      max-width: 420px;
+      max-width: 400px;
       margin: 16px 0 0;
       color: var(--text-secondary);
       font-size: 15.5px;
@@ -342,7 +339,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 28px;
+      margin-top: 26px;
     }
 
     .button {
@@ -747,8 +744,8 @@
       }
 
       .hero {
-        padding: 36px 0 48px;
-        background-position: 70% center;
+        padding: 32px 0 44px;
+        background-position: 70% top;
       }
 
       .hero-content {
@@ -804,14 +801,10 @@
       }
 
       .avatar {
-        width: 76px;
-        height: 76px;
-        margin-bottom: 18px;
-      }
-
-      .avatar svg {
-        width: 62px;
-        height: 62px;
+        width: 74px;
+        height: 74px;
+        font-size: 38px;
+        margin-bottom: 16px;
       }
 
       .project-card,
@@ -861,15 +854,8 @@
   <header class="site-header">
     <div class="container nav-inner">
       <a class="brand" href="#top" aria-label="返回首页">
-        <!-- 精致简约猫头 Logo -->
-        <span class="brand-mark" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 14 L5 6 C7 6 10 8 13 9 C15 8.3 17 8.3 19 9 C22 8 25 6 27 6 L25 14 C28 18 26.5 24 22 26 C18.5 27.5 13.5 27.5 10 26 C5.5 24 4 18 7 14 Z" fill="currentColor" fill-opacity="0.15"/>
-            <circle cx="11.5" cy="16" r="1.6" fill="currentColor"/>
-            <circle cx="20.5" cy="16" r="1.6" fill="currentColor"/>
-            <path d="M14 19.5 Q16 21 16 19.5 Q16 21 18 19.5"/>
-          </svg>
-        </span>
+        <!-- 品牌猫咪 Emoji -->
+        <span class="brand-mark" aria-hidden="true">🐱</span>
         <span>UvCat</span>
       </a>
 
@@ -909,48 +895,8 @@
       <div class="container">
         <!-- 偏左布局的内容框 -->
         <div class="hero-content reveal">
-          <!-- 原创高光漫画眼萌系小猫头像 -->
-          <div class="avatar" role="img" aria-label="UvCat 的简笔画萌猫头像">
-            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- 左耳 -->
-              <path d="M19 32 L15 15 C19 14 27 18 31 23" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-              <path d="M19 25 L17 18 C19 18 23 20 25 22" fill="#f43f5e" fill-opacity="0.3"/>
-
-              <!-- 右耳 -->
-              <path d="M61 32 L65 15 C61 14 53 18 49 23" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-              <path d="M61 25 L63 18 C61 18 57 20 55 22" fill="#f43f5e" fill-opacity="0.3"/>
-
-              <!-- 脸部与嘟嘟腮帮 -->
-              <path d="M31 23 C34 22 46 22 49 23 C63 24 67 36 67 44 C67 56 56 64 40 64 C24 64 13 56 13 44 C13 36 17 24 31 23 Z" fill="currentColor" fill-opacity="0.05" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-
-              <!-- 动漫高光大眼睛 -->
-              <ellipse cx="28" cy="40" rx="4.5" ry="5.5" fill="currentColor"/>
-              <circle cx="26.5" cy="38" r="1.8" fill="var(--bg, #ffffff)"/>
-              <circle cx="29.5" cy="42" r="0.9" fill="var(--bg, #ffffff)"/>
-
-              <ellipse cx="52" cy="40" rx="4.5" ry="5.5" fill="currentColor"/>
-              <circle cx="50.5" cy="38" r="1.8" fill="var(--bg, #ffffff)"/>
-              <circle cx="53.5" cy="42" r="0.9" fill="var(--bg, #ffffff)"/>
-
-              <!-- 萌萌小腮红 -->
-              <ellipse cx="20" cy="46" rx="4" ry="2" fill="#f43f5e" fill-opacity="0.35"/>
-              <ellipse cx="60" cy="46" rx="4" ry="2" fill="#f43f5e" fill-opacity="0.35"/>
-
-              <!-- 鼻子和小猫嘴 :3 -->
-              <path d="M40 43.5 L38.5 45.5 H41.5 Z" fill="#f43f5e"/>
-              <path d="M35 47.5 C36.5 50 39.5 49.5 40 47.5 C40.5 49.5 43.5 50 45 47.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-
-              <!-- 胡须 -->
-              <path d="M16 42 L6 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              <path d="M15 46 L7 48" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              <path d="M64 42 L74 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              <path d="M65 46 L73 48" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-
-              <!-- 趴着的一对小爪爪 -->
-              <path d="M26 62 C26 58 32 58 32 62" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="currentColor" fill-opacity="0.1"/>
-              <path d="M48 62 C48 58 54 58 54 62" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="currentColor" fill-opacity="0.1"/>
-            </svg>
-          </div>
+          <!-- 猫咪 Emoji 头像 -->
+          <div class="avatar" role="img" aria-label="UvCat 的猫咪头像">🐱</div>
 
           <p class="eyebrow">Personal Portfolio</p>
 
