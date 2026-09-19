@@ -145,7 +145,7 @@
       transform: translateY(0);
     }
 
-    /* Header：改用 sticky 实体占位，从结构上彻底杜绝遮挡 hero 图片顶部 */
+    /* Header */
     .site-header {
       position: sticky;
       top: 0;
@@ -244,7 +244,7 @@
       font-weight: 600;
     }
 
-    /* Hero：从顶栏底部立即开始铺展，right top 确保顶部边缘完整露出 */
+    /* Hero */
     .hero {
       position: relative;
       min-height: calc(100vh - var(--header-height));
@@ -260,7 +260,6 @@
       background-repeat: no-repeat;
     }
 
-    /* 靠左紧凑布局，完全让出右侧人物 */
     .hero-content {
       position: relative;
       z-index: 1;
@@ -284,7 +283,6 @@
       }
     }
 
-    /* 猫咪 Emoji 大头像 */
     .avatar {
       width: 82px;
       height: 82px;
@@ -353,6 +351,7 @@
       border-radius: 9px;
       font-size: 14px;
       font-weight: 700;
+      cursor: pointer;
       transition:
         transform var(--transition),
         background var(--transition),
@@ -634,6 +633,181 @@
       font-size: 14px;
     }
 
+    /* 折叠留言板系统（与经历共用区域） */
+    .guestbook-wrapper {
+      max-width: 800px;
+      margin: 44px auto 0;
+    }
+
+    .guestbook-details {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      overflow: hidden;
+      transition: border-color var(--transition);
+    }
+
+    .guestbook-details[open] {
+      border-color: var(--muted);
+    }
+
+    .guestbook-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      cursor: pointer;
+      user-select: none;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text);
+      list-style: none;
+      transition: background var(--transition);
+    }
+
+    .guestbook-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .guestbook-summary:hover {
+      background: var(--surface-hover);
+    }
+
+    .summary-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .summary-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .summary-arrow {
+      width: 18px;
+      height: 18px;
+      transition: transform var(--transition);
+    }
+
+    .guestbook-details[open] .summary-arrow {
+      transform: rotate(180deg);
+    }
+
+    .guestbook-content {
+      padding: 24px;
+      border-top: 1px solid var(--border);
+      background: var(--bg);
+    }
+
+    /* 留言输入表单 */
+    .guestbook-form {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 28px;
+      padding: 20px;
+      border-radius: var(--radius-small);
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    .form-group {
+      display: grid;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 1.5;
+      transition: border-color var(--transition);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--focus);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .form-submit-row {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    /* 留言卡片列表 */
+    .comments-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .comment-card {
+      padding: 16px 18px;
+      border-radius: var(--radius-small);
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .comment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      gap: 12px;
+    }
+
+    .comment-author {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .comment-time {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .comment-text {
+      margin: 0;
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .comments-empty {
+      padding: 30px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
     /* Contact */
     .contact-box {
       display: grid;
@@ -854,7 +1028,6 @@
   <header class="site-header">
     <div class="container nav-inner">
       <a class="brand" href="#top" aria-label="返回首页">
-        <!-- 品牌猫咪 Emoji -->
         <span class="brand-mark" aria-hidden="true">🐱</span>
         <span>UvCat</span>
       </a>
@@ -893,9 +1066,7 @@
   <main id="main-content">
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="container">
-        <!-- 偏左布局的内容框 -->
         <div class="hero-content reveal">
-          <!-- 猫咪 Emoji 头像 -->
           <div class="avatar" role="img" aria-label="UvCat 的猫咪头像">🐱</div>
 
           <p class="eyebrow">Personal Portfolio</p>
@@ -1133,22 +1304,63 @@
 
     <div class="section-divider"></div>
 
+    <!-- 04 经历与留言板块 -->
     <section id="experience" aria-labelledby="experience-title">
       <div class="container">
         <div class="section-header reveal">
           <div>
-            <p class="section-number">04 / EXPERIENCE</p>
-            <h2 class="section-title" id="experience-title">经历</h2>
+            <p class="section-number">04 / EXPERIENCE & GUESTBOOK</p>
+            <h2 class="section-title" id="experience-title">经历与留言</h2>
           </div>
           <p class="section-intro">
-            工作、教育或重要项目经历可以按照时间顺序放在这里。
+            记录成长的足迹，也欢迎每一位到访的朋友在此留下你的想法与问候。
           </p>
         </div>
 
+        <!-- 经历时间线 -->
         <div class="timeline reveal">
           <p class="timeline-empty">
             暂未提供具体经历。可复制 timeline-item 模块，在这里添加教育、工作或项目经历。
           </p>
+        </div>
+
+        <!-- 可折叠留言板 -->
+        <div class="guestbook-wrapper reveal">
+          <details class="guestbook-details" id="guestbookDetails">
+            <summary class="guestbook-summary">
+              <div class="summary-left">
+                <span>💬 访客留言板</span>
+              </div>
+              <div class="summary-right">
+                <span id="commentCount">0 条留言</span>
+                <svg class="summary-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m6 9 6 6 6-6"/>
+                </svg>
+              </div>
+            </summary>
+
+            <div class="guestbook-content">
+              <!-- 留言表单 -->
+              <form class="guestbook-form" id="guestbookForm">
+                <div class="form-group">
+                  <label for="authorInput">你的名字 / 昵称 <span style="color:#ef4444;">*</span></label>
+                  <input type="text" id="authorInput" placeholder="例如：旅行者、猫咪爱好者" required maxlength="30">
+                </div>
+
+                <div class="form-group">
+                  <label for="messageInput">留言内容 (纯文本) <span style="color:#ef4444;">*</span></label>
+                  <textarea id="messageInput" placeholder="写下一句问候或技术想法吧..." required maxlength="300"></textarea>
+                </div>
+
+                <div class="form-submit-row">
+                  <button class="button button-primary" type="submit">发表留言</button>
+                </div>
+              </form>
+
+              <!-- 留言卡片容器 -->
+              <div class="comments-list" id="commentsList"></div>
+            </div>
+          </details>
         </div>
       </div>
     </section>
@@ -1230,6 +1442,114 @@
         });
       }
 
+      // 留言板逻辑
+      const guestbookForm = document.getElementById("guestbookForm");
+      const authorInput = document.getElementById("authorInput");
+      const messageInput = document.getElementById("messageInput");
+      const commentsList = document.getElementById("commentsList");
+      const commentCount = document.getElementById("commentCount");
+      const STORAGE_KEY = "uvcat_guestbook_comments_v1";
+
+      const getStoredComments = () => {
+        try {
+          const data = localStorage.getItem(STORAGE_KEY);
+          return data ? JSON.parse(data) : [];
+        } catch {
+          return [];
+        }
+      };
+
+      const saveComments = (comments) => {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(comments));
+        } catch (e) {
+          console.error("无法保存留言到本地：", e);
+        }
+      };
+
+      const formatTime = (date) => {
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, "0");
+        const d = String(date.getDate()).padStart(2, "0");
+        const hh = String(date.getHours()).padStart(2, "0");
+        const mm = String(date.getMinutes()).padStart(2, "0");
+        return `${y}-${m}-${d} ${hh}:${mm}`;
+      };
+
+      const renderComments = () => {
+        const comments = getStoredComments();
+        if (commentCount) {
+          commentCount.textContent = `${comments.length} 条留言`;
+        }
+
+        if (!commentsList) return;
+        commentsList.innerHTML = "";
+
+        if (comments.length === 0) {
+          const emptyDiv = document.createElement("div");
+          emptyDiv.className = "comments-empty";
+          emptyDiv.textContent = "还没有留言，快来留下第一句脚印吧 🐾";
+          commentsList.appendChild(emptyDiv);
+          return;
+        }
+
+        comments.forEach((item) => {
+          const card = document.createElement("div");
+          card.className = "comment-card";
+
+          const header = document.createElement("div");
+          header.className = "comment-header";
+
+          const author = document.createElement("span");
+          author.className = "comment-author";
+          author.textContent = `🐾 ${item.name}`;
+
+          const time = document.createElement("span");
+          time.className = "comment-time";
+          time.textContent = item.time;
+
+          header.appendChild(author);
+          header.appendChild(time);
+
+          const text = document.createElement("p");
+          text.className = "comment-text";
+          text.textContent = item.text; // 严格以纯文本形式渲染，杜绝任何注入
+
+          card.appendChild(header);
+          card.appendChild(text);
+          commentsList.appendChild(card);
+        });
+      };
+
+      if (guestbookForm) {
+        guestbookForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const name = authorInput.value.trim();
+          const text = messageInput.value.trim();
+
+          if (!name || !text) return;
+
+          const newComment = {
+            id: Date.now(),
+            name: name,
+            text: text,
+            time: formatTime(new Date())
+          };
+
+          const comments = getStoredComments();
+          comments.unshift(newComment); // 最新的留言排在最上方
+          saveComments(comments);
+          renderComments();
+
+          authorInput.value = "";
+          messageInput.value = "";
+        });
+      }
+
+      // 初始化渲染留言
+      renderComments();
+
+      // 滚动淡入动画
       const revealElements = document.querySelectorAll(".reveal");
       const reduceMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)"
@@ -1259,6 +1579,9 @@
 
       revealElements.forEach((element) => observer.observe(element));
     })();
+  </script>
+</body>
+</html>
   </script>
 </body>
 </html>
